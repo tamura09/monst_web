@@ -47,28 +47,28 @@ A web application for managing Monster Strike character collections and Wakuwaku
 
 ### 1. Clone the Repository
 
-\`\`\`bash
-git clone https://github.com/YOUR_USERNAME/monstdb.git
-cd monstdb
-\`\`\`
+```bash
+git clone https://github.com/tamura09/monst_web.git
+cd monst_web
+```
 
 ### 2. Install Dependencies
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ### 3. Configure Environment Variables
 
-Copy \`.env.example\` to \`.env\`:
+Copy `.env.example` to `.env`:
 
-\`\`\`bash
+```bash
 cp .env.example .env
-\`\`\`
+```
 
 Set the following environment variables:
 
-\`\`\`env
+```env
 # Database connection URL
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 
@@ -79,23 +79,23 @@ NEXTAUTH_SECRET="your-secret-key-here"  # Generate with: openssl rand -base64 32
 # Google OAuth credentials (obtain from https://console.cloud.google.com/)
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
-\`\`\`
+```
 
 ### 4. Setup Database
 
-\`\`\`bash
+```bash
 # Run Prisma migrations
 npx prisma migrate deploy
 
 # Generate Prisma client
 npx prisma generate
-\`\`\`
+```
 
 ### 5. Start Development Server
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -117,28 +117,28 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 Manage your data visually with Prisma Studio:
 
-\`\`\`bash
+```bash
 npx prisma studio
-\`\`\`
+```
 
 Open [http://localhost:5555](http://localhost:5555) to view and edit database contents.
 
 ### Build
 
-\`\`\`bash
+```bash
 npm run build
-\`\`\`
+```
 
 ### Production
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 ## 📁 Project Structure
 
-\`\`\`
-monstdb/
+```
+monst_web/
 ├── app/                      # Next.js App Router
 │   ├── page.tsx             # Home (character search)
 │   ├── layout.tsx           # Layout
@@ -163,7 +163,7 @@ monstdb/
 │   └── migrations/          # Migration history
 ├── docs/                     # Development documentation
 └── package.json
-\`\`\`
+```
 
 ## 🗄️ Database Schema
 
@@ -184,7 +184,7 @@ See [prisma/schema.prisma](prisma/schema.prisma) for details.
 
 ### Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/monstdb)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tamura09/monst_web)
 
 1. Import your project in Vercel
 2. Set environment variables (refer to `.env.example`)
@@ -203,4 +203,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ## 📮 Contact
 
-If you have questions or suggestions, please create an [Issue](https://github.com/YOUR_USERNAME/monstdb/issues).
+If you have questions or suggestions, please create an [Issue](https://github.com/tamura09/monst_web/issues).

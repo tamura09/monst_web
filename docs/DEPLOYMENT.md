@@ -45,7 +45,7 @@
 npm start
 
 # Using PM2 (recommended)
-pm2 start npm --name "monstdb" -- start
+pm2 start npm --name "monst_web" -- start
 pm2 startup
 pm2 save
 
