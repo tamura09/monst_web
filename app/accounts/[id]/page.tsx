@@ -79,6 +79,16 @@ export default async function AccountDetailPage({
       return
     }
 
+    // 所有者チェック: 自分のアカウントのキャラクターのみ削除可能
+    const ownedCharacter = await prisma.ownedCharacter.findUnique({
+      where: { id: ownedCharacterId },
+      include: { gameAccount: true },
+    })
+
+    if (!ownedCharacter || ownedCharacter.gameAccount.userId !== session.user.id) {
+      return
+    }
+
     await prisma.ownedCharacter.delete({
       where: { id: ownedCharacterId },
     })
@@ -94,6 +104,16 @@ export default async function AccountDetailPage({
     const level = (formData.get('level') as string) || 'L'
 
     if (!ownedCharacterId || !wakuwakuMasterId) {
+      return
+    }
+
+    // 所有者チェック: 自分のアカウントのキャラクターのみ対象可能
+    const ownedCharacter = await prisma.ownedCharacter.findUnique({
+      where: { id: ownedCharacterId },
+      include: { gameAccount: true },
+    })
+
+    if (!ownedCharacter || ownedCharacter.gameAccount.userId !== session.user.id) {
       return
     }
 
@@ -164,9 +184,15 @@ export default async function AccountDetailPage({
 
     const slot = await prisma.ownedCharacterWakuwaku.findUnique({
       where: { id: wakuwakuSlotId },
+      include: { ownedCharacter: { include: { gameAccount: true } } },
     })
 
     if (!slot) {
+      return
+    }
+
+    // 所有者チェック: 自分のアカウントのわくわくの実のみ削除可能
+    if (slot.ownedCharacter.gameAccount.userId !== session.user.id) {
       return
     }
 
