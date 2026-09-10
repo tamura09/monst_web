@@ -195,8 +195,20 @@ export default async function AccountsPage({
     const wakuwakuMasterId = formData.get('wakuwakuMasterId') as string
     const level = (formData.get('level') as string) || 'L'
 
-    if (!ownedCharacterId || !wakuwakuMasterId) {
+    if (!ownedCharacterId || !wakuwakuMasterId || !session?.user?.id) {
       return
+    }
+
+    // 所持キャラの所有者確認
+    const ownedChar = await prisma.ownedCharacter.findUnique({
+      where: { id: ownedCharacterId },
+      include: {
+        gameAccount: true,
+      },
+    })
+
+    if (!ownedChar || ownedChar.gameAccount.userId !== session.user.id) {
+      throw new Error('Unauthorized')
     }
 
     // 既存のわくわくの実の数を確認
@@ -260,16 +272,28 @@ export default async function AccountsPage({
 
     const wakuwakuSlotId = formData.get('wakuwakuSlotId') as string
 
-    if (!wakuwakuSlotId) {
+    if (!wakuwakuSlotId || !session?.user?.id) {
       return
     }
 
     const slot = await prisma.ownedCharacterWakuwaku.findUnique({
       where: { id: wakuwakuSlotId },
+      include: {
+        ownedCharacter: {
+          include: {
+            gameAccount: true,
+          },
+        },
+      },
     })
 
     if (!slot) {
       return
+    }
+
+    // わくわくの実の所有者確認
+    if (slot.ownedCharacter.gameAccount.userId !== session.user.id) {
+      throw new Error('Unauthorized')
     }
 
     // 削除
@@ -316,8 +340,20 @@ export default async function AccountsPage({
     const ownedCharacterId = formData.get('ownedCharacterId') as string
     const slotsJson = formData.get('slots') as string
 
-    if (!ownedCharacterId || !slotsJson) {
+    if (!ownedCharacterId || !slotsJson || !session?.user?.id) {
       return
+    }
+
+    // 所持キャラの所有者確認
+    const ownedChar = await prisma.ownedCharacter.findUnique({
+      where: { id: ownedCharacterId },
+      include: {
+        gameAccount: true,
+      },
+    })
+
+    if (!ownedChar || ownedChar.gameAccount.userId !== session.user.id) {
+      throw new Error('Unauthorized')
     }
 
     try {
